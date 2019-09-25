@@ -23,6 +23,8 @@ class ExtensionKeywordListener(EventListener):
 
     def on_event(self, event, extension):
         query = event.get_argument()
+        if (len(query) < 3):
+            return RenderResultListAction([])
         regex = r".{3}-\d{1,5}"
         pattern = re.compile(regex)
         jqlQuery = ""
