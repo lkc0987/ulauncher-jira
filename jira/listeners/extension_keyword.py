@@ -37,7 +37,7 @@ class ExtensionKeywordListener(EventListener):
         workspace_url = extension.preferences.get('url')
         user = extension.preferences.get('username')
         password = extension.preferences.get('password')
-        maxResults = int(extension.preferences.get('maxResults'), 10)
+        maxResults = extension.preferences.get('maxResults')
 
         token = base64.b64encode(str('%s:%s' % (user, password)).encode()).decode()
         url = urllib.parse.urljoin(workspace_url, 'rest/api/latest/search')
