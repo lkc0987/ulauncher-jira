@@ -29,7 +29,7 @@ class ExtensionKeywordListener(EventListener):
         if (pattern.match(query)):
             jqlQuery = "key=\"" + query + "\""
         else:
-            jqlQuery = "summary~\"" + query + "\" OR text~\"" + query + "\""
+            jqlQuery = "summary~\"" + query + "\" OR description~\"" + query + "\""
         results = []
 
         workspace_url = extension.preferences.get('url')
