@@ -36,7 +36,8 @@
       "id": "maxNumber",
       "type": "input",
       "name": "Max number of results",
-      "description": "Max number of results to fetch from Jira"
+      "description": "Max number of results to fetch from Jira",
+      "default_value": 3
     }
   ]
 }
