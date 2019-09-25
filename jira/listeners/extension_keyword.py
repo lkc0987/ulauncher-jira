@@ -4,7 +4,8 @@
 import base64
 import json
 import urllib
-import urllib.request as request
+import urllib.parse
+import urllib.request
 from ulauncher.api.client.EventListener import EventListener
 from ulauncher.api.shared.action.DoNothingAction import DoNothingAction
 from ulauncher.api.shared.action.OpenUrlAction import OpenUrlAction
@@ -21,7 +22,7 @@ class ExtensionKeywordListener(EventListener):
 
     def on_event(self, event, extension):
         query = event.get_argument()
-        jqlQuery = "key=\"" + query + " or summary ~ \"" + query + "\""
+        jqlQuery = "key=\"" + query + "\" OR summary~\"" + query + "\""
         results = []
 
         workspace_url = extension.preferences.get('url')
@@ -31,7 +32,7 @@ class ExtensionKeywordListener(EventListener):
         token = base64.b64encode(str('%s:%s' % (user, password)).encode()).decode()
         url = urllib.parse.urljoin(workspace_url, 'rest/api/latest/search')
         get_url = "%s?%s" % (url, urllib.parse.urlencode({'jql': jqlQuery}))
-        req = request.Request(get_url, headers={'Authorization': 'Basic %s' % token}, method="GET")
+        req = urllib.request.Request(get_url, headers={'Authorization': 'Basic %s' % token, 'Content-Type': 'application/json'}, method="GET")
 
         result_types = []
 
