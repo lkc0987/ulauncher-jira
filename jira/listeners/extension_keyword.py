@@ -62,14 +62,14 @@ class ExtensionKeywordListener(EventListener):
             return RenderResultListAction(results)
         issues = result_types.get('issues')
         for issue in issues:
-            key = item.get('key')
-            title = item.get('summary')
-            url = urllib.parse.urljoin(workspace_url, 'browse/%s' % key)
+            key = issue.get('key')
+            title = issue.get('fields').get('summary')
+            url1 = urllib.parse.urljoin(workspace_url, 'browse/%s' % key)
             results.append(
                 ExtensionResultItem(
                     name=title if not key else '%s - %s' % (key, title),
                     description=key,
-                    icon=self.icon_file, on_enter=OpenUrlAction(url=url)
+                    icon=self.icon_file, on_enter=OpenUrlAction(url=url1)
                 )
             )
 
