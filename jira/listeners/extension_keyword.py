@@ -60,19 +60,18 @@ class ExtensionKeywordListener(EventListener):
                 )
             )
             return RenderResultListAction(results)
-
-        for rtype in result_types:
-            for item in rtype.get('items', []):
-                key = item.get('subtitle')
-                title = item.get('title')
-                url = item.get('url')
-                results.append(
-                    ExtensionResultItem(
-                        name=title if not key else '%s - %s' % (key, title),
-                        description=key,
-                        icon=self.icon_file, on_enter=OpenUrlAction(url=url)
-                    )
+        issues = result_types.get('issues')
+        for issue in issues:
+            key = item.get('key')
+            title = item.get('summary')
+            url = urllib.parse.urljoin(workspace_url, 'browse/%s' % key)
+            results.append(
+                ExtensionResultItem(
+                    name=title if not key else '%s - %s' % (key, title),
+                    description=key,
+                    icon=self.icon_file, on_enter=OpenUrlAction(url=url)
                 )
+            )
 
         if not results:
             results.append(
