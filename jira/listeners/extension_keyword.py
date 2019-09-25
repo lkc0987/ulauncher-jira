@@ -6,6 +6,7 @@ import json
 import urllib
 import urllib.parse
 import urllib.request
+import re
 from ulauncher.api.client.EventListener import EventListener
 from ulauncher.api.shared.action.DoNothingAction import DoNothingAction
 from ulauncher.api.shared.action.OpenUrlAction import OpenUrlAction
@@ -22,7 +23,12 @@ class ExtensionKeywordListener(EventListener):
 
     def on_event(self, event, extension):
         query = event.get_argument()
-        jqlQuery = "key=\"" + query + "\" OR summary~\"" + query + "\""
+        regex = r".{3}-\d{1,5}"
+        pattern = re.compile(regex)
+        if (pattern.match(query)):
+            jqlQuery = "summary~\"" + query + "\" OR text~\"" + query + "\""
+        else
+            jqlQuery = "key=\"" + query + "\""
         results = []
 
         workspace_url = extension.preferences.get('url')
