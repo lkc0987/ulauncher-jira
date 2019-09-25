@@ -37,10 +37,11 @@ class ExtensionKeywordListener(EventListener):
         workspace_url = extension.preferences.get('url')
         user = extension.preferences.get('username')
         password = extension.preferences.get('password')
+        maxResults = int(extension.preferences.get('maxResults'), 10)
 
         token = base64.b64encode(str('%s:%s' % (user, password)).encode()).decode()
         url = urllib.parse.urljoin(workspace_url, 'rest/api/latest/search')
-        get_url = "%s?%s" % (url, urllib.parse.urlencode({'jql': jqlQuery, 'maxResults': 3}))
+        get_url = "%s?%s" % (url, urllib.parse.urlencode({'jql': jqlQuery, 'maxResults': maxResults}))
         req = urllib.request.Request(get_url, headers={'Authorization': 'Basic %s' % token, 'Content-Type': 'application/json'}, method="GET")
 
         result_types = []

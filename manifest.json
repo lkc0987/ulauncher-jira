@@ -32,6 +32,11 @@
       "type": "input",
       "name": "Password or token",
       "description": "Your Atlassian password or token generated from https://id.atlassian.com/"
+    }, {
+      "id": "maxNumber",
+      "type": "input",
+      "name": "Max number of results",
+      "description": "Max number of results to fetch from Jira"
     }
   ]
 }
