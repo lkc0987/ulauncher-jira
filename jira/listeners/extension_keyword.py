@@ -25,6 +25,7 @@ class ExtensionKeywordListener(EventListener):
         query = event.get_argument()
         regex = r".{3}-\d{1,5}"
         pattern = re.compile(regex)
+        jqlQuery = ""
         if (pattern.match(query)):
             jqlQuery = "summary~\"" + query + "\" OR text~\"" + query + "\""
         else
