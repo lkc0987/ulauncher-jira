@@ -11,7 +11,7 @@ from ulauncher.api.shared.action.OpenUrlAction import OpenUrlAction
 from ulauncher.api.shared.action.RenderResultListAction import RenderResultListAction
 from ulauncher.api.shared.item.ExtensionResultItem import ExtensionResultItem
 
-__author__ = 'dhollinger'
+__author__ = 'lkc0987'
 
 
 class ExtensionKeywordListener(EventListener):
@@ -21,6 +21,7 @@ class ExtensionKeywordListener(EventListener):
 
     def on_event(self, event, extension):
         query = event.get_argument()
+        jqlQuery = "key=\"" + query + " or summary ~ \"" + query + "\""
         results = []
 
         workspace_url = extension.preferences.get('url')
@@ -28,8 +29,8 @@ class ExtensionKeywordListener(EventListener):
         password = extension.preferences.get('password')
 
         token = base64.b64encode(str('%s:%s' % (user, password)).encode()).decode()
-        url = urllib.parse.urljoin(workspace_url, 'rest/internal/2/productsearch/search')
-        get_url = "%s?%s" % (url, urllib.parse.urlencode({'q': query}))
+        url = urllib.parse.urljoin(workspace_url, 'rest/api/latest/search')
+        get_url = "%s?%s" % (url, urllib.parse.urlencode({'jql': query}))
         req = request.Request(get_url, headers={'Authorization': 'Basic %s' % token}, method="GET")
 
         result_types = []
